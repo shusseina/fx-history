@@ -1,3 +1,8 @@
+//
+//  Code.gs
+//  Created by Steve Anderson on 24/01/2017.
+//
+
 function convertTradeDuration() {
 
   // Logger.clear();
