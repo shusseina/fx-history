@@ -1,3 +1,8 @@
+//
+//  Test.gs
+//  Created by Steve Anderson on 24/01/2017.
+//
+
 function generateRandomDurationStrings() {
 
   // Logger.clear();
