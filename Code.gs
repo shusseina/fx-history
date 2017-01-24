@@ -20,19 +20,6 @@ function convertTradeDuration() {
 
   // Validate the selectedRange ???
 
-  // Prompt user for a column to write the results to
-  var selectedColumn = Browser.inputBox('Convert Trade Duration',
-    'Please enter a target column for the results (e.g. B) :',
-    Browser.Buttons.OK_CANCEL);
-
-  if (selectedColumn == 'cancel') {
-    return;
-  }
-
-  // Validate selectedColumn ???
-
-  var resultsColumn = sheet.getRange(selectedColumn + "1").getColumn();
-
   var range = sheet.getRange(selectedRange);
   var values = range.getValues();
 
@@ -46,7 +33,7 @@ function convertTradeDuration() {
     results.push([returnVal[m]]);
   }
 
-  sheet.getRange(range.getRow(), resultsColumn, results.length, 1).setValues(results);
+  sheet.getRange(range.getRow(), range.getColumn(), results.length, 1).setValues(results);
 
   // var finish = new Date();
 
@@ -71,12 +58,14 @@ function convertToMinutes_(input) {
   var daysAsMinutes = 0;
   var hoursAsMinutes = 0;
   var minutes = 0;
+  var secondsAsMinutes = 0;
 
   daysAsMinutes = getDaysAsMinutes_(input);
   hoursAsMinutes = getHoursAsMinutes_(input);
   minutes = getMinutes_(input);
+  secondsAsMinutes = getSecondsAsMinutes_(input);
 
-  return daysAsMinutes + hoursAsMinutes + minutes;
+  return daysAsMinutes + hoursAsMinutes + minutes + secondsAsMinutes;
 }
 
 function getDaysAsMinutes_(durationString) {
@@ -92,6 +81,11 @@ function getHoursAsMinutes_(durationString) {
 function getMinutes_(durationString) {
 
   return asMinutes_(durationString, /\d*m/, /m/, 1);
+}
+
+function getSecondsAsMinutes_(durationString) {
+
+  return asMinutes_(durationString, /\d*s/, /s/, (1/60));
 }
 
 function asMinutes_(durationString, regex, regex2, multiplyingFactor) {
@@ -130,8 +124,8 @@ function onOpen() {
   var spreadsheet = SpreadsheetApp.getActive();
   var menuItems = [
     {name: 'Convert Trade Duration', functionName: 'convertTradeDuration'},
-//    {name: 'Generate Random Duration Strings', functionName: 'generateRandomDurationStrings'},
-//    {name: 'Convert Random Duration Values', functionName: 'convertRandomDurationValues'}
+    // {name: 'Generate Random Duration Strings', functionName: 'generateRandomDurationStrings'},
+    // {name: 'Convert Random Duration Values', functionName: 'convertRandomDurationValues'}
   ];
   spreadsheet.addMenu('Macros', menuItems);
 }

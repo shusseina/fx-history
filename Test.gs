@@ -41,22 +41,53 @@ function generateRandomDurationStrings_(input) {
   }
 
   // else...
-  var randomChoice = Math.floor(Math.random() * (7 + 1 - 1)) + 1;
+  var randomChoice = Math.floor(Math.random() * (15 + 1 - 1)) + 1;
   switch (randomChoice) {
+    // DHMS
     case 1:
-      return randomDaysString_() + " " + randomHoursString_() + " " + randomMinutesString_();
+      return randomDaysString_() + " " + randomHoursString_() + " " + randomMinutesString_() + " " + randomSecondsString_();
+    // DHM
     case 2:
-      return randomDaysString_() + " " + randomHoursString_();
+      return randomDaysString_() + " " + randomHoursString_() + " " + randomMinutesString_();
+    // DHS
     case 3:
-      return randomDaysString_() + " " + randomMinutesString_();
+      return randomDaysString_() + " " + randomHoursString_() + " " + randomSecondsString_();
+    // DMS
     case 4:
-      return randomHoursString_() + " " + randomMinutesString_();
+      return randomDaysString_() + " " + randomMinutesString_() + " " + randomSecondsString_();
+    // DH
     case 5:
-      return randomDaysString_();
+      return randomDaysString_() + " " + randomHoursString_();
+    // DM
     case 6:
-      return randomHoursString_();
+      return randomDaysString_() + " " + randomMinutesString_();
+    // DS
     case 7:
+      return randomDaysString_() + " " + randomSecondsString_();
+    // D
+    case 8:
+      return randomDaysString_();
+    // HMS
+    case 9:
+      return randomHoursString_() + " " + randomMinutesString_() + " " + randomSecondsString_();
+    // HM
+    case 10:
+      return randomHoursString_() + " " + randomMinutesString_();
+    // HS
+    case 11:
+      return randomHoursString_() + " " + randomSecondsString_();
+    // H
+    case 12:
+      return randomHoursString_();
+    // MS
+    case 13:
+      return randomMinutesString_() + " " + randomSecondsString_();
+    // M
+    case 14:
       return randomMinutesString_();
+    // S
+    case 15:
+      return randomSecondsString_();
   }
 }
 
@@ -76,6 +107,12 @@ function randomMinutesString_() {
 
   var minutes = Math.floor(Math.random() * (59 + 1 - 1)) + 1;
   return minutes.toString() + "m";
+}
+
+function randomSecondsString_() {
+
+  var seconds = Math.floor(Math.random() * (59 + 1 - 1)) + 1;
+  return seconds.toString() + "s";
 }
 
 function convertRandomDurationValues() {
@@ -132,6 +169,7 @@ function convertRandomDurationValues_(input) {
   var days = Math.floor(input / (60 * 24));
   var hours = Math.floor((input - (days * 60 * 24)) / 60);
   var minutes = Math.floor(input - (days * 60 * 24) - (hours * 60));
+  var seconds = Math.round((input - (days * 60 * 24) - (hours * 60) - minutes) * 60);
 
   var durationString = "";
 
@@ -144,7 +182,11 @@ function convertRandomDurationValues_(input) {
   }
 
   if (minutes > 0) {
-      durationString = durationString + minutes.toString() + "m";
+      durationString = durationString + minutes.toString() + "m ";
+  }
+
+  if (seconds > 0) {
+    durationString = durationString + seconds.toString() + "s";
   }
 
   return durationString.trim();
