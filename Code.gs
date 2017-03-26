@@ -25,7 +25,19 @@ function convertTradeDuration() {
 
   // Logger.clear();
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = spreadsheet.getSheets()[0];
+  // var sheet = spreadsheet.getSheets()[0];
+
+  // From the Google Apps Script reference...
+  // If multiple sheets have the same name, the leftmost one is returned.
+  var sheet = spreadsheet.getSheetByName('History');
+
+  // Validate sheet
+  if (sheet === null) {
+    Browser.msgBox('Convert Trade Duration',
+    'Did not complete. Could not find the History worksheet (case-sensitive).',
+    Browser.Buttons.OK);
+    return;
+  }
 
   // Prompt user for a range
   var selectedRange = Browser.inputBox('Convert Trade Duration',
@@ -36,9 +48,9 @@ function convertTradeDuration() {
     return;
   }
 
-  // Validate the selectedRange ???
-
   var range = sheet.getRange(selectedRange);
+  // No need to validate the range, Google Sheets handles that for us
+
   var values = range.getValues();
 
   // var start = new Date();
