@@ -29,7 +29,10 @@ function convertTradeDuration() {
 
   // From the Google Apps Script reference...
   // If multiple sheets have the same name, the leftmost one is returned.
-  var sheet = spreadsheet.getSheetByName('History');
+  // var sheet = spreadsheet.getSheetByName('History');
+
+  // Select the worksheet being displayed
+  var sheet = spreadsheet.getActiveSheet();
 
   // Validate sheet
   if (sheet === null) {
